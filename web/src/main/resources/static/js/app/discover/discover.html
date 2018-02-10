@@ -1,0 +1,84 @@
+<div class="container" ng-init="discover.onInit()">
+    <div class="jumbotron">
+        <h1>Discover equipments</h1>
+        <p class="lead">
+            Search for devices using IP ranges
+        </p>
+
+        <form name="myForm"
+              ng-class="{ true: 'form-group has-success', false : 'form-group'} [myForm.cidrInput.$valid]">
+            <input type="text" class="form-control" name="ipRangeInput" ng-model="discover.ipRange"
+                   required aria-describedby="ipRangeInputHelp" placeholder="Enter IP range">
+            <small id="ipRangeInputHelp" class="form-text text-muted">
+                Example: 192.168.5.0-192.168.5.200;192.168.6.100-192.168.6.180;192.168.8.170
+            </small>
+        </form>
+        <br>
+        <button ng-if="discover.processStatus === 'AVAILABLE' || discover.processStatus === 'FINALIZED'"
+                type="submit"
+                class="btn btn-primary" ng-click="discover.clickStartDiscover()">
+            Discover
+        </button>
+
+    </div>
+
+    <div ng-if="discover.processStatus === 'AVAILABLE'" class="alert alert-success" role="alert">
+        The discovery process is available.
+    </div>
+
+    <div ng-if="discover.processStatus === 'PROCESSING' && discover.finishedFutures == 0" class="alert alert-info"
+         role="alert">
+        The discovery process is getting ready, wait a moment please.
+    </div>
+    <div ng-if="discover.processStatus === 'PROCESSING' && discover.finishedFutures == 0" class="loader"></div>
+
+    <div ng-if="discover.processStatus === 'PROCESSING' && discover.finishedFutures > 0"
+         class="alert alert-warning" role="alert">
+        The discovery process is started
+    </div>
+    <div ng-if="discover.processStatus === 'NOT_AVAILABLE'" class="alert alert-danger" role="alert">
+        <strong>Error!</strong> The discovery process is not available.
+    </div>
+
+    <div ng-if="discover.processStatus === 'FINALIZED' && discover.futuresSize > 0" role="alert">
+        <div class="alert alert-success">
+            The discovery process has finished.
+        </div>
+
+        <table class="table">
+            <thead class="thead-inverse">
+            <tr>
+                <th>Threads</th>
+                <th>Completed</th>
+                <th>Canceled</th>
+                <th>Found Devices</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{discover.process.futuresSize}}</td>
+                <td>{{discover.process.completedFutures}}</td>
+                <td>{{discover.process.canceledFutures}}</td>
+                <td>{{discover.process.foundDevices}}</td>
+                <td>{{discover.startTime}}</td>
+                <td>{{discover.endTime}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="progress"
+         ng-if="discover.processStatus === 'PROCESSING' && discover.futuresSize > 0 && discover.finishedFutures > 0">
+        <div class="progress-bar progress-bar-striped bg-info"
+             role="progressbar"
+             ng-class="{ true: 'progress-bar-animated', false : ''} [discover.processStatus === 'PROCESSING']"
+             style="width:{{discover.process.completedFutures * 100 / discover.process.futuresSize | number:2}}%"
+             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+            {{discover.process.completedFutures * 100 / discover.process.futuresSize | number:2}}%
+        </div>
+    </div>
+
+
+</div>

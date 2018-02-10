@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="common-header">
+    <title>AsierG</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap/bootstrap.min_v4.0.0-alpha.6.css}" rel="stylesheet" media="screen"/>
+
+    <!-- Bootstrap 4 vertical menu (source: https://www.jonathanbriehl.com/2015/12/15/bootstrap-4-vertical-menu/) -->
+    <link type="text/css" th:href="@{/css/bootstrap/bootstrap-vertical-menu.css}" rel="stylesheet"/>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <!--<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>-->
+
+    <!-- Custom styles for this template -->
+    <link type="text/css" th:href="@{/css/app.css}" rel="stylesheet"/>
+    <link type="text/css" th:href="@{/css/navbar-top.css}" rel="stylesheet"/>
+    <link type="text/css" th:href="@{/css/navbar-vertical.css}" rel="stylesheet"/>
+
+    <base href="/"/>
+    <!--<base href="/asierg/"/>-->
+</head>
+
+
+<div th:fragment="before-body-scripts">
+
+    <!-- Bootstrap JS -->
+    <script th:src="@{/css/bootstrap/jquery-3.1.1.slim.min.js}"></script>
+    <script th:src="@{/css/bootstrap/tether.min.js}"></script>
+    <script th:src="@{/css/bootstrap/bootstrap.min_v4.0.0-alpha.6.js}"></script>
+
+    <!-- AngularJS -->
+    <script th:src="@{/js/lib/angular.min_v1.5.8.js}"></script>
+    <script th:src="@{/js/lib/angular-ui-router.min_v0.4.3.js}"></script>
+
+    <!-- Pagination Directive -->
+    <script th:src="@{/js/lib/dirPagination.js}"></script>
+
+    <!-- AngularJS -->
+    <script th:src="@{/js/app/app.js}"></script>
+    <script th:src="@{/js/app/config/appHttpLog.js}"></script>
+
+    <script th:src="@{/js/app/common/menuCtrl.js}"></script>
+    <script th:src="@{/js/app/home/homeCtrl.js}"></script>
+    <script th:src="@{/js/app/discover/discoverCtrl.js}"></script>
+    <script th:src="@{/js/app/update/updateCtrl.js}"></script>
+
+    <script th:src="@{/js/app/factories/discoverFactory.js}"></script>
+    <script th:src="@{/js/app/factories/equipmentFactory.js}"></script>
+    <script th:src="@{/js/app/factories/firmwareFactory.js}"></script>
+    <script th:src="@{/js/app/factories/modelFactory.js}"></script>
+
+</div>
+
+</html>

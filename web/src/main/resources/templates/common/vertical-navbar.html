@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <div th:fragment="vertical-navbar" ng-controller="MenuCtrl as menu" class="bootstrap-vertical-nav">
+
+        <button class="btn btn-primary hidden-md-up" type="button" data-toggle="collapse" data-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">
+            <span class="">Menu</span>
+        </button>
+
+        <div class="collapse" id="collapseExample">
+            <ul class="nav flex-column" id="exCollapsingNavbar3">
+                <li class="nav-item" ng-class="{active: menu.isActive('home')}">
+                    <a class="nav-link" ui-sref="default" name="default">Home</a>
+                </li>
+                <li class="nav-item" ng-class="{active: menu.isActive('discover')}">
+                    <a class="nav-link" ui-sref="discover" name="discover">Discover</a>
+                </li>
+                <li class="nav-item" ng-class="{active: menu.isActive('update')}">
+                    <a class="nav-link" ui-sref="update" name="update">Update</a>
+                </li>
+                <li class="nav-item" ng-class="{active: menu.isActive('pruebas')}">
+                    <a class="nav-link" ui-sref="pruebas" name="pruebas">Pruebas</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+</html>

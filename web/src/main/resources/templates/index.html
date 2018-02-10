@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/commons :: common-header"/>
+
+<body ng-app="asiergApp">
+
+    <div th:replace="common/navbar :: top-navbar"/>
+
+    <section class="container" ui-view="">
+    </section>
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <div th:replace="common/commons :: before-body-scripts"/>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<div class="jumbotron" ng-init="home.onInit()">
+    <h1>Equipments</h1>
+    <p class="lead">
+        Found equipments in the discovery process
+    </p>
+    <form>
+        <div class="form-group row">
+            <label for="model" class="col-sm-2 col-form-label">Model</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="model"
+                        ng-options="model as model.name for model in home.models track by model.productIdentifier"
+                        ng-model="home.selectedModel">
+                </select>
+            </div>
+            <label class="col-sm-2 col-form-label">Firmware</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="firmware"
+                        ng-options="firmware as firmware.name for firmware in home.firmwares track by firmware.firmwareVersion"
+                        ng-model="home.selectedFirmware">
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="ipRange" class="col-sm-2 col-form-label">Range</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="ipRange" name="ipRange" ng-model="home.ipRange"
+                       placeholder="">
+            </div>
+        </div>
+        <div class="form-group row">
+            <button type="submit" class="btn btn-primary" ng-click="home.clickSearchEquipments()">
+                Search
+            </button>
+        </div>
+    </form>
+</div>
+
+<br>
+
+<div class="container" ng-if="home.equipments.length>0">
+    <div class="form-group row">
+        <h2>Equipments</h2>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+        </div>
+    </div>
+    <div class="form-group row">
+
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th ng-click="home.sort('serialNumber')">Serial Number
+                    <i ng-show="home.sortKey=='serialNumber'"
+                       ng-class="{'fa fa-arrow-up':home.reverse,'fa fa-arrow-down':!home.reverse}"></i>
+                </th>
+                <th ng-click="home.sort('ipAddress')">Ip Address
+                    <i ng-show="home.sortKey=='ipAddress'"
+                       ng-class="{'fa fa-arrow-up':home.reverse,'fa fa-arrow-down':!home.reverse}"></i>
+                </th>
+                <th ng-click="home.sort('productIdentifier')">Product Identifier
+                    <i ng-show="home.sortKey=='productIdentifier'"
+                       ng-class="{'fa fa-arrow-up':home.reverse,'fa fa-arrow-down':!home.reverse}"></i>
+                </th>
+                <th ng-click="home.sort('firmwareVersion')">Firmware Version
+                    <i ng-show="home.sortKey=='last_name'"
+                       ng-class="{'fa fa-arrow-up':home.reverse,'fa fa-arrow-down':!home.reverse}"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr dir-paginate="equipment in home.equipments | orderBy:home.sortKey:home.reverse | filter:search| itemsPerPage:10">
+                <td>{{equipment.serialNumber}}</td>
+                <td>{{equipment.ipAddress}}</td>
+                <td>{{equipment.productIdentifier}}</td>
+                <td>{{equipment.firmwareVersion}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <dir-pagination-controls
+                max-size="10"
+                direction-links="true"
+                boundary-links="true">
+        </dir-pagination-controls>
+    </div>
+
+
+</div>
