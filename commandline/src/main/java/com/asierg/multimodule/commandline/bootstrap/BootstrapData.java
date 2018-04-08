@@ -1,7 +1,10 @@
 package com.asierg.multimodule.commandline.bootstrap;
 
 import com.asierg.multimodule.domain.*;
-import com.asierg.multimodule.service.repositories.*;
+import com.asierg.multimodule.service.repositories.FamilyRepository;
+import com.asierg.multimodule.service.repositories.FirmwareModelRepository;
+import com.asierg.multimodule.service.repositories.FirmwareRepository;
+import com.asierg.multimodule.service.repositories.ModelRepository;
 import com.asierg.multimodule.service.services.EquipmentService;
 import org.apache.commons.collections4.IteratorUtils;
 import org.slf4j.Logger;
@@ -24,23 +27,22 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
     @Value("${spring.profiles.active}")
     private String activeProfile;
 
-    @Autowired
     private FamilyRepository familyRepository;
-
-    @Autowired
     private FirmwareRepository firmwareRepository;
-
-    @Autowired
     private FirmwareModelRepository firmwareModelRepository;
-
-    @Autowired
     private ModelRepository modelRepository;
 
     @Autowired
-    private EquipmentService equipmentService;
+    public BootstrapData(FamilyRepository familyRepository,
+                         FirmwareRepository firmwareRepository,
+                         FirmwareModelRepository firmwareModelRepository,
+                         ModelRepository modelRepository) {
+        this.familyRepository = familyRepository;
+        this.firmwareRepository = firmwareRepository;
+        this.firmwareModelRepository = firmwareModelRepository;
+        this.modelRepository = modelRepository;
+    }
 
-    @Autowired
-    private DiscoverErrorRepository discoverErrorRepository;
 
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         if (!activeProfile.equals("prod")) {
@@ -57,8 +59,6 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
         List<Model> modelList = IteratorUtils.toList(modelRepository.findAll().iterator());
         List<Firmware> firmwareList = IteratorUtils.toList(firmwareRepository.findAll().iterator());
         List<FirmwareModel> firmwareModelList = IteratorUtils.toList(firmwareModelRepository.findAll().iterator());
-
-        Equipment equipment = equipmentService.getById("100200300");
 
         if (CollectionUtils.isEmpty(familyList) && CollectionUtils.isEmpty(modelList)
                 && CollectionUtils.isEmpty(firmwareList) && CollectionUtils.isEmpty(firmwareModelList)) {

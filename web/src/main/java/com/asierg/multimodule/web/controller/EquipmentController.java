@@ -21,15 +21,15 @@ import java.util.List;
 @RequestMapping("/equipment")
 public class EquipmentController {
 
-    private static final Logger logger = LoggerFactory.getLogger(EquipmentController.class);
-
-    @Autowired
     private EquipmentService equipmentService;
 
+    @Autowired
+    public EquipmentController(EquipmentService equipmentService) {
+        this.equipmentService = equipmentService;
+    }
+
     @GetMapping({"/find"})
-    public ResponseEntity<List<DeviceDTO>> findEquipments(@RequestParam("model") String model,
-                                                          @RequestParam("firmware") String firmware,
-                                                          @RequestParam("ipRange") String ipRange) {
+    public ResponseEntity<List<DeviceDTO>> findEquipments() {
 
         List<Equipment> equipmentList = equipmentService.listAll();
         ModelMapper modelMapper = new ModelMapper();

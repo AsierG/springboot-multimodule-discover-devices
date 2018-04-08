@@ -19,8 +19,12 @@ import java.util.List;
 @RequestMapping("/firmware")
 public class FirmwareController {
 
-    @Autowired
     private FirmwareRepository firmwareRepository;
+
+    @Autowired
+    public FirmwareController(FirmwareRepository firmwareRepository) {
+        this.firmwareRepository = firmwareRepository;
+    }
 
     @GetMapping({"/findAll"})
     public ResponseEntity<List<FirmwareDto>> findFirmwares() {

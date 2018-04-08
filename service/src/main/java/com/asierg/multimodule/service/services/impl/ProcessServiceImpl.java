@@ -24,19 +24,18 @@ import java.util.concurrent.CompletableFuture;
 public class ProcessServiceImpl implements ProcessService {
 
     private static final Logger logger = LoggerFactory.getLogger(ProcessServiceImpl.class);
-    private static final Logger auditLogger = LoggerFactory.getLogger("audit-log");
 
-    @Autowired
     private OperationService operationService;
+    private AsyncCommunicationService asyncProcessService;
 
     @Autowired
-    private AsyncCommunicationService asyncProcessService;
+    public ProcessServiceImpl(OperationService operationService, AsyncCommunicationService asyncProcessService) {
+        this.operationService = operationService;
+        this.asyncProcessService = asyncProcessService;
+    }
 
     private boolean allFuturesStarted = false;
     private List<CompletableFuture<DeviceDTO>> listCompletableFuture = new ArrayList<>();
-
-    public ProcessServiceImpl() {
-    }
 
     public void launchCmdDiscoverProcess(String ipRangeInput) {
         this.launchDiscoverProcess(ipRangeInput, InterfaceType.COMMAND_LINE);
@@ -61,10 +60,6 @@ public class ProcessServiceImpl implements ProcessService {
             discoverLaunched = true;
         }
         return discoverLaunched;
-
-//        CompletableFuture.allOf((CompletableFuture[]) listCompletableFuture.toArray(new CompletableFuture[0])).join();
-//        operationService.deactivateOperation();
-
     }
 
     public void launchWebDiscoverProcess(String ipFrom, String ipTo) {

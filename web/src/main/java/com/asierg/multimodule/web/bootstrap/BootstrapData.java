@@ -4,7 +4,6 @@ import com.asierg.multimodule.domain.*;
 import com.asierg.multimodule.domain.enums.InterfaceType;
 import com.asierg.multimodule.domain.enums.OperationType;
 import com.asierg.multimodule.service.repositories.*;
-import com.asierg.multimodule.service.services.EquipmentService;
 import org.apache.commons.collections4.IteratorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,23 +25,24 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
     @Value("${spring.profiles.active}")
     private String activeProfile;
 
-    @Autowired
     private FamilyRepository familyRepository;
-
-    @Autowired
     private FirmwareRepository firmwareRepository;
-
-    @Autowired
     private FirmwareModelRepository firmwareModelRepository;
-
-    @Autowired
     private ModelRepository modelRepository;
-
-    @Autowired
-    private EquipmentService equipmentService;
-
-    @Autowired
     private OperationRepository operationRepository;
+
+    @Autowired
+    public BootstrapData(FamilyRepository familyRepository,
+                         FirmwareRepository firmwareRepository,
+                         FirmwareModelRepository firmwareModelRepository,
+                         ModelRepository modelRepository,
+                         OperationRepository operationRepository) {
+        this.familyRepository = familyRepository;
+        this.firmwareRepository = firmwareRepository;
+        this.firmwareModelRepository = firmwareModelRepository;
+        this.modelRepository = modelRepository;
+        this.operationRepository = operationRepository;
+    }
 
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         if (!activeProfile.equals("prod")) {
@@ -135,7 +135,6 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
             firmwareModel3.setFirmware(firmware1);
             firmwareModel3.setModel(model2);
             firmwareModelRepository.save(firmwareModel3);
-
             logger.info("end");
 
             Operation operation = new Operation(InterfaceType.WEB, OperationType.DISCOVER);

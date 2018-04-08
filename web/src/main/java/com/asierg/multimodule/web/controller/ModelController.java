@@ -19,8 +19,12 @@ import java.util.List;
 @RequestMapping("/model")
 public class ModelController {
 
-    @Autowired
     private ModelRepository modelRepository;
+
+    @Autowired
+    public ModelController(ModelRepository modelRepository) {
+        this.modelRepository = modelRepository;
+    }
 
     @GetMapping({"/findAll"})
     public ResponseEntity<List<ModelDto>> findFirmwares() {
@@ -28,8 +32,7 @@ public class ModelController {
         ModelMapper modelMapper = new ModelMapper();
         List<ModelDto> modelDTOList = modelMapper.map(modelList, new TypeToken<List<ModelDto>>() {
         }.getType());
-        ResponseEntity<List<ModelDto>> responseEntity = new ResponseEntity<>(modelDTOList, HttpStatus.OK);
-        return responseEntity;
+        return new ResponseEntity<>(modelDTOList, HttpStatus.OK);
     }
 
 

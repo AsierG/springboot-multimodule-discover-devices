@@ -18,8 +18,12 @@ public class OperationServiceImpl implements OperationService {
 
     private static final Logger logger = LoggerFactory.getLogger(OperationServiceImpl.class);
 
-    @Autowired
     private OperationRepository operationRepository;
+
+    @Autowired
+    public OperationServiceImpl(OperationRepository operationRepository) {
+        this.operationRepository = operationRepository;
+    }
 
     @Override
     public Operation getOperation() {
@@ -29,11 +33,9 @@ public class OperationServiceImpl implements OperationService {
     @Override
     public boolean operationIsAvailable() {
         OperationStatus operationStatus = getOperationStatus();
-        if (OperationStatus.AVAILABLE.equals(operationStatus) || OperationStatus.FINALIZED.equals(operationStatus)) {
-            return true;
-        } else {
-            return false;
-        }
+        return OperationStatus.AVAILABLE.equals(operationStatus)
+                || OperationStatus.FINALIZED.equals(operationStatus);
+
     }
 
     @Override

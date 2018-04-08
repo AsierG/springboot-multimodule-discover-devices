@@ -24,8 +24,12 @@ public class UpdateController {
 
     private static final Logger logger = LoggerFactory.getLogger(UpdateController.class);
 
-    @Autowired
     private EquipmentRepository equipmentRepository;
+
+    @Autowired
+    public UpdateController(EquipmentRepository equipmentRepository) {
+        this.equipmentRepository = equipmentRepository;
+    }
 
     @GetMapping({"/search"})
     public ResponseEntity<List<DeviceDTO>> search(@RequestParam("firmware") String firmware,
@@ -38,8 +42,7 @@ public class UpdateController {
         ModelMapper modelMapper = new ModelMapper();
         List<DeviceDTO> deviceDTOList = modelMapper.map(equipments, new TypeToken<List<DeviceDTO>>() {
         }.getType());
-        ResponseEntity<List<DeviceDTO>> responseEntity = new ResponseEntity<>(deviceDTOList, HttpStatus.OK);
-        return responseEntity;
+        return new ResponseEntity<>(deviceDTOList, HttpStatus.OK);
     }
 
 }

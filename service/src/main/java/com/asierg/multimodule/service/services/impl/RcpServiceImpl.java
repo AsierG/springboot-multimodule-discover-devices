@@ -3,7 +3,6 @@ package com.asierg.multimodule.service.services.impl;
 import com.asierg.multimodule.domain.Firmware;
 import com.asierg.multimodule.service.dto.DeviceDTO;
 import com.asierg.multimodule.service.enums.*;
-import com.asierg.multimodule.service.services.EquipmentService;
 import com.asierg.multimodule.service.services.RcpService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.http.HttpHeaders;
@@ -40,11 +39,12 @@ public class RcpServiceImpl implements RcpService {
     @Value("${rcp.asierg.password:admin}")
     private String rcpPassword;
 
-    @Autowired
     private Byte[] allFieldsRequest;
 
     @Autowired
-    private EquipmentService equipmentService;
+    public RcpServiceImpl(Byte[] allFieldsRequest) {
+        this.allFieldsRequest = allFieldsRequest;
+    }
 
     private String getValueFromData(String fieldName, String data) {
         final String init = fieldName + " = ";

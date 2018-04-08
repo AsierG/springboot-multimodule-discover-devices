@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/discover")
 public class DiscoverController {
 
-    @Autowired
     private ProcessService processService;
+
+    @Autowired
+    public DiscoverController(ProcessService processService) {
+        this.processService = processService;
+    }
 
     @GetMapping({"/start"})
     public Boolean startDiscover(@RequestParam("ipRange") String ipRange) {
@@ -22,14 +26,12 @@ public class DiscoverController {
 
     @GetMapping({"/futures"})
     public Integer futures() {
-        Integer futures = processService.getRunningFutures();
-        return futures;
+        return processService.getRunningFutures();
     }
 
     @GetMapping({"/status"})
     public ProcessDTO processStatus() {
-        ProcessDTO processDTO = processService.getProcessDto();
-        return processDTO;
+        return processService.getProcessDto();
     }
 
 }

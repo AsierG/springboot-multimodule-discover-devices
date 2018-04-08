@@ -25,16 +25,17 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     private static final Logger auditLogger = LoggerFactory.getLogger("audit-log");
 
-    @Autowired
     private ModelRepository modelRepository;
-
-    @Autowired
     private FirmwareRepository firmwareRepository;
-
-    @Autowired
     private EquipmentRepository equipmentRepository;
 
-    public EquipmentServiceImpl() {
+    @Autowired
+    public EquipmentServiceImpl(ModelRepository modelRepository,
+                                FirmwareRepository firmwareRepository,
+                                EquipmentRepository equipmentRepository) {
+        this.modelRepository = modelRepository;
+        this.firmwareRepository = firmwareRepository;
+        this.equipmentRepository = equipmentRepository;
     }
 
     public List<Equipment> listAll() {
